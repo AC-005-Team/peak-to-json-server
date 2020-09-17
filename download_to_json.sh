@@ -15,3 +15,5 @@ audiowaveform -i ${fname_mp3} -o ../${filepath_json}/${fname_json}.json --pixels
 
 cd ../..
 python scale.py private/${filepath_json}/${fname_json}.json
+
+rm ${filepath_download}/${fname_mp3}
