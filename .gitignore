@@ -1,1 +1,3 @@
 node_modules
+private/song_temp/*.mp3
+private/song_peaks/*.json
