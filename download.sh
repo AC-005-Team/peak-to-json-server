@@ -6,4 +6,3 @@ file_path='s3_property'
 #echo "${fnamepre}!!!"
 cd ${file_path}
 wget -O ${fname} ${url}
-

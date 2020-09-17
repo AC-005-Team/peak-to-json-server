@@ -3,7 +3,7 @@ url=$1
 ftype=$2
 fnamepre=`echo $1 | cut -d / -f 8` 
 fname=`echo ${fnamepre} | cut -c 1-36`
-filepath_download=`private/song_temp`
+filepath_download='private/song_temp'
 
 cd ${filepath_download}
 wget -O ${fname} ${url}

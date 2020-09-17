@@ -2,11 +2,12 @@ const express = require('express')
 const app = express()
 const fs = require('fs')
 const bodyParser = require('body-parser')
-var jsonParser = bodyParser.json()
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+const jsonParser = bodyParser.json()
 const { promisify } = require('util');
 const readFileAsync = promisify(fs.readFile);
-const exec = require('child_process').exec
+const util = require('util');
+const exec = util.promisify(require('child_process').exec)
+
 app.use(express.static('public'));
 
 app.get('/api/v1/getjson/:filetype/:filename', async (req, res) => {
@@ -20,14 +21,23 @@ app.get('/api/v1/getjson/:filetype/:filename', async (req, res) => {
     console.log(err)
   }
 })
-app.post('/api/v1/soundwavify',jsonParser , async (req, res) => {
+app.post('/api/v1/soundwavify',jsonParser , (req, res) => {
   console.log('----------')
   console.log('Got a post')
   console.log('----------')
-  console.log(req.body.filepath, req.body.filetype)
   const { filetype, filepath } = req.body
+  console.log(filetype, filepath)
+  async function downloadMusicToJson() {
+    try {
+        const { stdout, stderr } = await exec(`./download_to_json.sh "${filepath}" ${filetype}`);
+        console.log('stdout:', stdout);
+        console.log('stderr:', stderr);
+    }catch (err) {
+       console.error(err);
+    };
+  };
   // const downloadMusicToJson = exec( `sh download_to_json.sh ${filepath} ${filetype}` )
-  // await downloadMusicToJson()
+  downloadMusicToJson()
   res.send('ok:D')
 })
 
