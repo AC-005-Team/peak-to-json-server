@@ -7,8 +7,10 @@ const { promisify } = require('util');
 const readFileAsync = promisify(fs.readFile);
 const util = require('util');
 const exec = util.promisify(require('child_process').exec)
+const cors = require('cors')
 
 app.use(express.static('public'));
+app.use(cors())
 
 app.get('/api/v1/getjson/:filetype/:filename', async (req, res) => {
   const { filetype, filename } = req.params;
