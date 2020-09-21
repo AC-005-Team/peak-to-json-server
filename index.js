@@ -17,7 +17,7 @@ app.get('/api/v1/getjson/:filetype/:filename', async (req, res) => {
     const data = await readFileAsync(filePath)
     res.json(JSON.parse(data))
   } catch (err) {
-    res.send("you don't belong here")
+    res.json(JSON.parse('public/default.json'))
     console.log(err)
   }
 })
